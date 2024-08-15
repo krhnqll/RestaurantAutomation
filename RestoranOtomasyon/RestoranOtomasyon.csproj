@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1D45EF20-420B-4CD3-BDE1-81A0E127391C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>RestoranOtomasyon</RootNamespace>
+    <AssemblyName>RestoranOtomasyon</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Case.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Case.Designer.cs">
+      <DependentUpon>Case.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CUSTOMER_LIST.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CUSTOMER_LIST.Designer.cs">
+      <DependentUpon>CUSTOMER_LIST.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EDIT_CUS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EDIT_CUS.Designer.cs">
+      <DependentUpon>EDIT_CUS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EDIT_PROD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EDIT_PROD.Designer.cs">
+      <DependentUpon>EDIT_PROD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MENU.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MENU.Designer.cs">
+      <DependentUpon>MENU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADMIN_LOGIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADMIN_LOGIN.Designer.cs">
+      <DependentUpon>ADMIN_LOGIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ORDERS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ORDERS.Designer.cs">
+      <DependentUpon>ORDERS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrdersClass.cs" />
+    <Compile Include="PAYMENT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PAYMENT.Designer.cs">
+      <DependentUpon>PAYMENT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PRODUCTS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PRODUCTS.Designer.cs">
+      <DependentUpon>PRODUCTS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="REPORT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="REPORT.Designer.cs">
+      <DependentUpon>REPORT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RestoranOtomasyonClass.cs" />
+    <Compile Include="SessionClass.cs" />
+    <Compile Include="TABLE_LIST.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TABLE_LIST.Designer.cs">
+      <DependentUpon>TABLE_LIST.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADMIN_PAGE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADMIN_PAGE.Designer.cs">
+      <DependentUpon>ADMIN_PAGE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ADMIN_LOGIN.resx">
+      <DependentUpon>ADMIN_LOGIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADMIN_PAGE.resx">
+      <DependentUpon>ADMIN_PAGE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Case.resx">
+      <DependentUpon>Case.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CUSTOMER_LIST.resx">
+      <DependentUpon>CUSTOMER_LIST.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EDIT_CUS.resx">
+      <DependentUpon>EDIT_CUS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EDIT_PROD.resx">
+      <DependentUpon>EDIT_PROD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MENU.resx">
+      <DependentUpon>MENU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ORDERS.resx">
+      <DependentUpon>ORDERS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PAYMENT.resx">
+      <DependentUpon>PAYMENT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PRODUCTS.resx">
+      <DependentUpon>PRODUCTS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="REPORT.resx">
+      <DependentUpon>REPORT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TABLE_LIST.resx">
+      <DependentUpon>TABLE_LIST.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\DataSources\ADMIN_LOGIN.datasource" />
+    <None Include="Properties\DataSources\ADMIN_PAGE.datasource" />
+    <None Include="Properties\DataSources\Case.datasource" />
+    <None Include="Properties\DataSources\CUSTOMER_LIST.datasource" />
+    <None Include="Properties\DataSources\EDIT_CUS.datasource" />
+    <None Include="Properties\DataSources\EDIT_PROD.datasource" />
+    <None Include="Properties\DataSources\MENU.datasource" />
+    <None Include="Properties\DataSources\ORDERS.datasource" />
+    <None Include="Properties\DataSources\PAYMENT.datasource" />
+    <None Include="Properties\DataSources\PRODUCTS.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
+    <None Include="Properties\DataSources\REPORT.datasource" />
+    <None Include="Properties\DataSources\RestoranOtomasyonClass.datasource" />
+    <None Include="Properties\DataSources\TABLE_LIST.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\43391571.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black-abstract-background-wallpaper-image.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rfggsa_9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Profile User free icons designed by Freepik.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\png-transparent-computer-icons-user-profile-barcelona-miscellaneous-blue-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\admin-logo-icon-8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Genel\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

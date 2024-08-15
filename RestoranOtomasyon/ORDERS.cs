@@ -1,0 +1,98 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace RestoranOtomasyon
+{
+    public partial class ORDERS : Form
+    {
+        RestoranOtomasyonClass db;
+        public ORDERS()
+        {
+            InitializeComponent();
+            db = new RestoranOtomasyonClass();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void ORDERS_Load(object sender, EventArgs e)
+        {
+            FetchDataFromOrdersTable();
+            
+                
+        }
+        private void FetchDataFromOrdersTable() 
+        {
+            try
+            {
+
+                string queery = @"SELECT Orders.Date,Orders.Order_id, Bar.Bar_name, Desks.Desk_name, Kitchen.Kitchen_name,[User].User_name, [dbo].[Products].Prod_name
+                        FROM 
+                        [dbo].[Orders]
+                        JOIN [dbo].[Bar] ON [dbo].[Orders].Bar_id = [dbo].[Bar].Bar_id
+                        JOIN [dbo].[Kitchen] ON [dbo].[Orders].Kitchen_id =  [dbo].[Kitchen].Kitchen_id
+                        JOIN [dbo].[User] ON [dbo].[Orders].[User_id] = [dbo].[User].User_id
+                        JOIN [dbo].[Desks] ON [dbo].[Orders].Desk_id = [dbo].[Desks].Desk_id
+                        JOIN [dbo].[Products] ON [dbo].[Orders].Prod_id = [dbo].[Products].Prod_id ";
+
+                SqlCommand ordList = new SqlCommand(queery, db.SqlServer);
+                SqlDataAdapter rd = new SqlDataAdapter(ordList);
+                DataTable Ord = new DataTable();
+                rd.Fill(Ord);
+
+                dataGridView1.DataSource = Ord;
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                string queery = @"SELECT Orders.Date,Orders.Order_id, Bar.Bar_name, Desks.Desk_name, Kitchen.Kitchen_name,[User].User_name, [dbo].[Products].Prod_name
+                        FROM 
+            [dbo].[Orders]
+            JOIN [dbo].[Bar] ON [dbo].[Orders].Bar_id = [dbo].[Bar].Bar_id
+            JOIN [dbo].[Kitchen] ON [dbo].[Orders].Kitchen_id =  [dbo].[Kitchen].Kitchen_id
+            JOIN [dbo].[User] ON [dbo].[Orders].[User_id] = [dbo].[User].User_id
+            JOIN [dbo].[Desks] ON [dbo].[Orders].Desk_id = [dbo].[Desks].Desk_id
+            JOIN [dbo].[Products] ON [dbo].[Orders].Prod_id = [dbo].[Products].Prod_id ";
+
+                SqlCommand ordList = new SqlCommand(queery, db.SqlServer);
+                SqlDataAdapter rd = new SqlDataAdapter(ordList);
+                DataTable Ord = new DataTable();
+                rd.Fill(Ord);
+
+                dataGridView1.DataSource = Ord;
+
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+
+            }
+        }
+    }
+}
