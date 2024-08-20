@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +15,8 @@ namespace RestoranOtomasyon
 {
     public partial class MENU : Form
     {
+        private string deskName;
+        private int deskId;
 
         RestoranOtomasyonClass ISLEMLER;
         public MENU()
@@ -22,9 +24,10 @@ namespace RestoranOtomasyon
             InitializeComponent();
             ISLEMLER = new RestoranOtomasyonClass();
             SiparisOlustur();
+            
 
         }
-
+ 
         private void button4_Click(object sender, EventArgs e)
         {
             int categoryId = int.Parse(button4.Tag.ToString());
@@ -137,7 +140,8 @@ namespace RestoranOtomasyon
 
         private void MENU_Load(object sender, EventArgs e)
         {
-           
+           SetDeskName(deskName);
+           FetchAllDataFromDesk();
         }
 
         DataTable dt; 
@@ -151,11 +155,27 @@ namespace RestoranOtomasyon
             try
             {
                 dt = new DataTable("MasaSiparisleri");
-
+                dt.Columns.Add("Prod_id", typeof(int));
                 dt.Columns.Add("Prod_name", typeof(string));
                 dt.Columns.Add("Prod_price", typeof(decimal));
 
                 dataGridView4.DataSource = dt;
+
+                //for (int i = 0; i < dataGridView4.Rows.Count; i++)
+                //{
+                //    int prodId = (int)dt.Rows[i]["Prod_id"];
+
+                //    string query = @"INSERT INTO Desks (Desk_name, Prod_id) VALUES (@deskName,@ProdId)";
+
+                //    SqlCommand command = new SqlCommand(query, ISLEMLER.SqlServer);
+
+                //    command.Parameters.AddWithValue("@deskName", deskName);
+                //    command.Parameters.AddWithValue("@ProdId", prodId);
+
+                //    command.ExecuteNonQuery();
+
+                //}
+
 
             }
             catch (Exception Ex)
@@ -169,7 +189,7 @@ namespace RestoranOtomasyon
         {
             int rowIndex = ProductsList.SelectedCells[0].RowIndex;
             int prodId = Convert.ToInt32(ProductsList.Rows[rowIndex].Cells["Prod_id"].Value);
-            string query = @"SELECT Prod_name, Prod_price FROM Products WHERE Prod_id = @Prod_id";
+            string query = @"SELECT Prod_id, Prod_name, Prod_price FROM Products WHERE Prod_id = @Prod_id";
 
             SqlCommand command = new SqlCommand(query, ISLEMLER.SqlServer);
             command.Parameters.AddWithValue("@Prod_id", prodId);
@@ -185,6 +205,7 @@ namespace RestoranOtomasyon
 
 
             DataRow newRow = dt.NewRow();
+            newRow["Prod_id"] = dataTable.Rows[0]["Prod_id"];
             newRow["Prod_name"] = dataTable.Rows[0]["Prod_name"];
             newRow["Prod_price"] = dataTable.Rows[0]["Prod_price"];
 
@@ -194,79 +215,141 @@ namespace RestoranOtomasyon
 
             //Double Click Eventi ile datagridViews arası veri aktarımı.
         }
-        public void SetDeskName(String name)
+
+
+        public void SetDeskName(String desk_name)
         {
             
-            this.Name = name;
+            this.deskName =desk_name;
             
-            textBox1.Text = name;
+            textBox1.Text = desk_name;
+        }
+        public void setDeskId(int desk_id)
+        {
+            this.deskId = desk_id;
+        }
+
+        private void MasaKaydet()
+        {
+            try
+            {
+                ISLEMLER.SqlServer.Open();
+
+                for (int i = 0; i < dataGridView4.Rows.Count; i++)
+                {
+                    int prodId = (int)dt.Rows[i]["Prod_id"];
+
+                    string query = @"INSERT INTO Desks ( Desk_id,Desk_name, Prod_id) VALUES (@desk_id,@deskName,@ProdId)";
+
+                    SqlCommand command = new SqlCommand(query, ISLEMLER.SqlServer);
+
+                    command.Parameters.AddWithValue("@desk_id", deskId);
+                    command.Parameters.AddWithValue("@deskName", deskName);
+                    command.Parameters.AddWithValue("@ProdId", prodId);
+
+                    command.ExecuteNonQuery();
+
+                }
+
+            }
+
+            
+            catch (Exception Ex)
+            {
+                //MessageBox.Show(Ex.Message);
+            }
+            finally
+            {
+                ISLEMLER.SqlServer.Close();
+            }
         }
 
         private void savexit_Click(object sender, EventArgs e)
         {
-            OrdersClass NewOrder = new OrdersClass();
+            //int previousCount = dt.Rows.Count;
 
-            if (SessionClass.User_id.HasValue) // Giriş yapmış kullanıcının Id'sini eşitlediğim alan.
-            {
-                NewOrder.User_id = SessionClass.User_id.Value;
-                NewOrder.Prd_id = GridData(); // Gridviewdan gelen veriyi nesneye eşitlediğim alan.
-                NewOrder.date = DateTime.Now; // Anlık tarihi ekleme alanı.
+         
+                OrdersClass NewOrder = new OrdersClass();
 
-                NewOrder.kitchen_id = FetchDatatFromKitchenTable(); ;
-                NewOrder.Bar_id = FetchDataFromBarTable();
-                NewOrder.Desk_id = 2;
+                if (SessionClass.User_id.HasValue) 
+                {
+                
+                    foreach (DataGridViewRow row in dataGridView4.Rows)
+                    {
+                        NewOrder.User_id = SessionClass.User_id.Value;
+                        NewOrder.Prd_id = Convert.ToInt32(row.Cells["Prod_id"].Value); // Gridviewdan gelen veriyi nesneye eşitlediğim alan.
+                        NewOrder.date = DateTime.Now; 
 
+                        NewOrder.kitchen_id = FetchDatatFromKitchenTable(); ;
+                        NewOrder.Bar_id = FetchDataFromBarTable();
+                        NewOrder.Desk_id = deskId;
 
+                        int lastCount = dt.Rows.Count;
 
-                InsertProductInTable(NewOrder);
+                        InsertProductInTable(NewOrder);
 
-            }
+                    }
+                    MasaKaydet();
+                    MessageBox.Show("ADDING DATA WAS SUCCESSFUL", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            else if (SessionClass.Admin_id.HasValue)
-            {
-                NewOrder.User_id = SessionClass.Admin_id.Value;
-                NewOrder.Prd_id = GridData(); // Gridviewdan gelen veriyi nesneye eşitlediğim alan.
-                NewOrder.date = DateTime.Now; // Anlık tarihi ekleme alanı.
+                    this.Close();
 
-                NewOrder.kitchen_id = FetchDatatFromKitchenTable();
-                NewOrder.Bar_id = FetchDataFromBarTable();
-                NewOrder.Desk_id =2;
+                }
 
+                else if (SessionClass.Admin_id.HasValue)
+                {
+                    foreach (DataGridViewRow row in dataGridView4.Rows)
+                    {
 
+                        NewOrder.User_id = SessionClass.Admin_id.Value;
+                        NewOrder.Prd_id = Convert.ToInt32(row.Cells["Prod_id"].Value);  // Gridviewdan gelen veriyi nesneye eşitlediğim alan.
+                        NewOrder.date = DateTime.Now; // Anlık tarihi ekleme alanı.
 
+                        NewOrder.kitchen_id = FetchDatatFromKitchenTable();
+                        NewOrder.Bar_id = FetchDataFromBarTable();
+                        NewOrder.Desk_id = deskId;
 
-                InsertProductInTable(NewOrder);
-            }
-            else
-            {
-                MessageBox.Show("There Is Not User Or Admin Login!!");
-            }
-
+                        InsertProductInTable(NewOrder);
+                    }
+                    MasaKaydet();
+                    MessageBox.Show("ADDING DATA WAS SUCCESSFUL", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("There Is Not User Or Admin Login!!");
+                }
+    
             
         }
 
-        private int? GridData() // Gridviewden verileri çektiğimiz kısım.
+        private int? FetchDeskId()
         {
 
-            int rowIndex = ProductsList.SelectedCells[0].RowIndex;
-            int prodId = Convert.ToInt32(ProductsList.Rows[rowIndex].Cells["Prod_id"].Value);
-                
-            return prodId;
-     
-          
-        }
-
-        private DataTable GetDataFromTable() // Databaseden verileri çektiğimiz kısım.
-        {
 
             return null; 
+        
         }
+
+        //private int? GridData() // Gridviewden verileri çektiğimiz kısım.
+        //{
+
+        //    int rowIndex = dataGridView4.SelectedCells[0].RowIndex;
+        //    int prodId = Convert.ToInt32(ProductsList.Rows[rowIndex].Cells["Prod_id"].Value);
+                
+        //    return prodId;
+     
+          
+        //}
+
         private void InsertProductInTable(OrdersClass NewOrder) // Verileri Orders Tablosuna Ekleyeceğimiz kısım.
         {
             
+    
 
             try
             {
+
                 ISLEMLER.SqlServer.Open();
 
                 string query = @"INSERT INTO [dbo].[Orders] (Prod_id, User_id,Date,Kitchen_id,Bar_id,Desk_id) 
@@ -281,14 +364,13 @@ namespace RestoranOtomasyon
                 comm.Parameters.AddWithValue("@Bar_id", NewOrder.Bar_id);
                 comm.Parameters.AddWithValue("@Desk_id", NewOrder.Desk_id);
 
+
                 comm.ExecuteNonQuery();
 
-                MessageBox.Show("ADDING DATA WAS SUCCESSFUL", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
 
-                MessageBox.Show($"An error occurred: {ex.Message}");
             }
             finally 
             { 
@@ -307,7 +389,7 @@ namespace RestoranOtomasyon
                 adapter.Fill(dt);
 
                 int randomId = (int)commBar.ExecuteScalar();
-
+                
                 return randomId;
             }
             catch
@@ -349,6 +431,33 @@ namespace RestoranOtomasyon
         private void button10_Click(object sender, EventArgs e)
         {
             SiparisDnustur();
+        }
+
+        private void FetchAllDataFromDesk()
+        {
+            string query = @"SELECT [dbo].[Products].Prod_id, Prod_name, Prod_price 
+                             FROM dbo.Desks INNER JOIN [dbo].[Products] ON 
+                             [dbo].[Desks].Prod_id = [dbo].[Products].Prod_id 
+                             WHERE Desk_id=@deskId";
+
+            
+            SqlCommand commBar = new SqlCommand(query,ISLEMLER.SqlServer);
+
+            commBar.Parameters.AddWithValue("@deskId",deskId);
+            
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(commBar);
+            DataTable dataTable = new DataTable();
+            dataAdapter.Fill(dataTable);
+           
+
+            dataGridView4.DataSource = dataTable;
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            
         }
     }
 }
