@@ -11,14 +11,24 @@ using System.Windows.Forms;
 
 namespace RestoranOtomasyon
 {
+    public enum efrmtype { Menu,Payment }
     
     public partial class TABLE_LIST : Form
     {
         RestoranOtomasyonClass db;
+        efrmtype frmtype = efrmtype.Menu;
         
         public TABLE_LIST()
         {
             InitializeComponent();
+            db = new RestoranOtomasyonClass();
+        }
+        public TABLE_LIST(efrmtype callType)
+        {
+            InitializeComponent();
+
+            frmtype = callType;  
+
             db = new RestoranOtomasyonClass();
         }
 
@@ -106,10 +116,22 @@ namespace RestoranOtomasyon
         {
             int dESK_ID = int.Parse(button3.Tag.ToString());
             string query = button3.Text;
-            MENU MenForm = new MENU();
-            MenForm.setDeskId(dESK_ID);
-            MenForm.SetDeskName(query);
-            MenForm.ShowDialog();
+
+            if (frmtype == efrmtype.Menu)
+            {
+                MENU MenForm = new MENU();
+                MenForm.setDeskId(dESK_ID);
+                MenForm.SetDeskName(query);
+                MenForm.ShowDialog();
+
+            }
+            else
+            {
+                PAYMENT PayFrm = new PAYMENT();
+                PayFrm.setDeskId(dESK_ID);
+                PayFrm.SetDeskName(query);
+                PayFrm.ShowDialog();
+            }
 
             bool recordExist = CheckExistDatabase(dESK_ID);
 
@@ -128,10 +150,22 @@ namespace RestoranOtomasyon
         {
             int dESK_ID = int.Parse(button1.Tag.ToString());
             string query = button1.Text;
-            MENU MenForm = new MENU();
-            MenForm.setDeskId(dESK_ID);
-            MenForm.SetDeskName(query);
-            MenForm.ShowDialog();
+
+            if (frmtype == efrmtype.Menu)
+            {
+                MENU MenForm = new MENU();
+                MenForm.setDeskId(dESK_ID);
+                MenForm.SetDeskName(query);
+                MenForm.ShowDialog();
+
+            }
+            else
+            {
+                PAYMENT PayFrm = new PAYMENT();
+                PayFrm.setDeskId(dESK_ID);
+                PayFrm.SetDeskName(query);
+                PayFrm.ShowDialog();
+            }
 
             bool recordExist = CheckExistDatabase(dESK_ID);
 
@@ -150,10 +184,24 @@ namespace RestoranOtomasyon
         {
             int dESK_ID = int.Parse(button2.Tag.ToString());
             string query = button2.Text;
-            MENU MenForm = new MENU();
-            MenForm.setDeskId(dESK_ID);
-            MenForm.SetDeskName(query);
-            MenForm.ShowDialog();
+
+            if(frmtype == efrmtype.Menu)
+            {
+                MENU MenForm = new MENU();
+                MenForm.setDeskId(dESK_ID);
+                MenForm.SetDeskName(query);
+                MenForm.ShowDialog();
+
+            }
+            else
+            {
+                PAYMENT PayFrm = new PAYMENT();
+                PayFrm.setDeskId(dESK_ID);
+                PayFrm.SetDeskName(query);
+                PayFrm.ShowDialog();  
+            }
+
+
 
             bool recordExist = CheckExistDatabase(dESK_ID);
 
@@ -171,10 +219,23 @@ namespace RestoranOtomasyon
         {
             int dESK_ID = int.Parse(button4.Tag.ToString());
             string query = button4.Text;
-            MENU MenForm = new MENU();
-            MenForm.setDeskId(dESK_ID);
-            MenForm.SetDeskName(query);
-            MenForm.ShowDialog();
+            if (frmtype == efrmtype.Menu)
+            {
+                MENU MenForm = new MENU();
+                MenForm.setDeskId(dESK_ID);
+                MenForm.SetDeskName(query);
+                MenForm.ShowDialog();
+
+
+            }
+            else
+            {
+                PAYMENT PayFrm = new PAYMENT();
+                PayFrm.setDeskId(dESK_ID);
+                PayFrm.SetDeskName(query);
+                PayFrm.ShowDialog();
+
+            }
 
             bool recordExist = CheckExistDatabase(dESK_ID);
 
@@ -192,10 +253,22 @@ namespace RestoranOtomasyon
         {
             int dESK_ID = int.Parse(button5.Tag.ToString());
             string query = button5.Text;
-            MENU MenForm = new MENU();
-            MenForm.setDeskId(dESK_ID);
-            MenForm.SetDeskName(query);
-            MenForm.ShowDialog();
+
+            if (frmtype == efrmtype.Menu)
+            {
+                MENU MenForm = new MENU();
+                MenForm.setDeskId(dESK_ID);
+                MenForm.SetDeskName(query);
+                MenForm.ShowDialog();
+
+            }
+            else
+            {
+                PAYMENT PayFrm = new PAYMENT();
+                PayFrm.setDeskId(dESK_ID);
+                PayFrm.SetDeskName(query);
+                PayFrm.ShowDialog();
+            }
 
             bool recordExist = CheckExistDatabase(dESK_ID);
 
