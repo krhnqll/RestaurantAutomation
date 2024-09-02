@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -103,6 +103,7 @@ namespace RestoranOtomasyon
             textBox4.Text = dataGridView1.Rows[choose].Cells[3].Value.ToString();
             textBox5.Text = dataGridView1.Rows[choose].Cells[4].Value.ToString();
             textBox6.Text = dataGridView1.Rows[choose].Cells[5].Value.ToString();
+            textBox7.Text = dataGridView1.Rows[choose].Cells[6].Value.ToString();
         }
 
         private void CUSTOMER_LIST_Load(object sender, EventArgs e)
@@ -118,8 +119,59 @@ namespace RestoranOtomasyon
 
         private void button1_Click(object sender, EventArgs e)
         {
+            int userId = Convert.ToInt32(textBox1.Text);
+            string User_name = textBox2.Text; // 
+            string user_surname = textBox3.Text;//
+            string username = textBox4.Text; // 
+            string password = textBox5.Text;//
+            string User_email = textBox6.Text;
+            string user_phone = textBox7.Text;
+
+            try
+            {
+                db.SqlServer.Open();
+
+                string query = @"UPDATE [dbo].[User] SET User_username =@username, User_name =@User_name, User_surname =@user_surname, User_password=@password, User_Email=@User_email, User_phonenum=@user_phone WHERE User_id=@userId";
+
+                SqlCommand cmd = new SqlCommand(query, db.SqlServer);
+                cmd.Parameters.AddWithValue("@username", textBox3.Text);
+                cmd.Parameters.AddWithValue("@User_name", textBox1.Text);
+                cmd.Parameters.AddWithValue("@user_surname", textBox2.Text);
+                cmd.Parameters.AddWithValue("@password", textBox4.Text);
+                cmd.Parameters.AddWithValue("@User_email", textBox5.Text);
+                cmd.Parameters.AddWithValue("@user_phone", textBox6.Text);
+                cmd.Parameters.AddWithValue("userId", userId);
+
+                int rowAffect = cmd.ExecuteNonQuery();
+
+                if (rowAffect > 0)
+                {
+                    MessageBox.Show("Update Succesful");
+                    textBox1.Clear();
+                    textBox2.Clear();
+                    textBox3.Clear();
+                    textBox4.Clear();
+                    textBox5.Clear();
+                    textBox6.Clear();
+                    textBox7.Clear();
+
+                }
+                else
+                {
+                    MessageBox.Show("Update Failed");
+                }
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+            finally
+            {
+                db.SqlServer.Close();
+            }
 
         }
+        
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -146,6 +198,7 @@ namespace RestoranOtomasyon
                     textBox4.Clear();
                     textBox5.Clear();
                     textBox6.Clear();
+                    textBox7.Clear();
 
                 }
                 else
@@ -163,6 +216,7 @@ namespace RestoranOtomasyon
                 if (db.SqlServer.State == ConnectionState.Open)
                 {
                     db.SqlServer.Close();
+                    
                 }
             }
         }
