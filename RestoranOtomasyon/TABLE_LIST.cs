@@ -40,6 +40,7 @@ namespace RestoranOtomasyon
 
         private void TABLE_LIST_Load(object sender, EventArgs e)
         {
+            
             foreach(Control control in this.Controls)
             {
                 if(control is Button button && button.Tag != null)
@@ -50,15 +51,26 @@ namespace RestoranOtomasyon
 
                     if(recordExist)
                     {
-                        button.BackColor = Color.Green;
+                        button.BackColor = Color.Red;
                     }
                     else
                     {
-                        button.BackColor= Color.Red;
+                        button.BackColor= Color.Green;
                     }
 
                 }
             }
+            if(frmtype == efrmtype.Menu)
+            {
+                lblTAGNEWORDER.Visible = true;
+                
+            }
+            else if(frmtype == efrmtype.Payment)
+            {
+                lblTAGNEWORDER.Visible = false;
+                btnEXIT.Visible = false;
+            }
+ 
         }
 
         private void fecthData()
@@ -131,17 +143,18 @@ namespace RestoranOtomasyon
                 PayFrm.setDeskId(dESK_ID);
                 PayFrm.SetDeskName(query);
                 PayFrm.ShowDialog();
+                
             }
 
             bool recordExist = CheckExistDatabase(dESK_ID);
 
             if (recordExist)
             {
-                button3.BackColor = Color.Green;
+                button3.BackColor = Color.Red;
             }
             else
             {
-                button3.BackColor = Color.Red;
+                button3.BackColor = Color.Green;
             }
 
         }
@@ -165,17 +178,19 @@ namespace RestoranOtomasyon
                 PayFrm.setDeskId(dESK_ID);
                 PayFrm.SetDeskName(query);
                 PayFrm.ShowDialog();
+                
+
             }
 
             bool recordExist = CheckExistDatabase(dESK_ID);
 
             if (recordExist)
             {
-                button1.BackColor = Color.Green;
+                button1.BackColor = Color.Red;
             }
             else
             {
-                button1.BackColor = Color.Red;
+                button1.BackColor = Color.Green;
             }
 
         }
@@ -198,7 +213,9 @@ namespace RestoranOtomasyon
                 PAYMENT PayFrm = new PAYMENT();
                 PayFrm.setDeskId(dESK_ID);
                 PayFrm.SetDeskName(query);
-                PayFrm.ShowDialog();  
+                PayFrm.ShowDialog();
+                
+
             }
 
 
@@ -207,11 +224,11 @@ namespace RestoranOtomasyon
 
             if (recordExist)
             {
-                button2.BackColor = Color.Green;
+                button2.BackColor = Color.Red;
             }
             else
             {
-                button2.BackColor = Color.Red;
+                button2.BackColor = Color.Green;
             }
         }
 
@@ -234,6 +251,8 @@ namespace RestoranOtomasyon
                 PayFrm.setDeskId(dESK_ID);
                 PayFrm.SetDeskName(query);
                 PayFrm.ShowDialog();
+                
+
 
             }
 
@@ -241,11 +260,11 @@ namespace RestoranOtomasyon
 
             if (recordExist)
             {
-                button4.BackColor = Color.Green;
+                button4.BackColor = Color.Red;
             }
             else
             {
-                button4.BackColor = Color.Red;
+                button4.BackColor = Color.Green;
             }
         }
 
@@ -268,17 +287,19 @@ namespace RestoranOtomasyon
                 PayFrm.setDeskId(dESK_ID);
                 PayFrm.SetDeskName(query);
                 PayFrm.ShowDialog();
+                
+
             }
 
             bool recordExist = CheckExistDatabase(dESK_ID);
 
             if (recordExist)
             {
-                button5.BackColor = Color.Green;
+                button5.BackColor = Color.Red;
             }
             else
             {
-                button5.BackColor = Color.Red;
+                button5.BackColor = Color.Green;
             }
 
 
